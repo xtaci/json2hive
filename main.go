@@ -40,16 +40,31 @@ func createSchema(doc interface{}) (schema string) {
 	case map[string]interface{}:
 		var struct_type string
 		if len(doc) > 0 {
-			struct_type = "STRUCT<"
-			var fields []string
-			for name, value := range doc {
+			// count types
+			types := make(map[string]bool)
+			for _, value := range doc {
 				if subschema := createSchema(value); subschema != "" {
-					field_schema := name + ":" + subschema
-					fields = append(fields, field_schema)
+					types[subschema] = true
 				}
 			}
-			struct_type += strings.Join(fields, ",")
-			struct_type += ">"
+
+			if len(types) == 1 && len(doc) > 1 { // treat as map
+				for typ := range types {
+					struct_type = "MAP<STRING, " + typ + ">"
+					break
+				}
+			} else { // treat as struct
+				struct_type = "STRUCT<"
+				var fields []string
+				for name, value := range doc {
+					if subschema := createSchema(value); subschema != "" {
+						field_schema := name + ":" + subschema
+						fields = append(fields, field_schema)
+					}
+				}
+				struct_type += strings.Join(fields, ",")
+				struct_type += ">"
+			}
 		}
 		return struct_type
 	case []interface{}:

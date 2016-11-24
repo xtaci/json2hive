@@ -1,45 +1,48 @@
 {
-  "description": "my doc",
-  "foo": {
-    "bar": "baz",
-    "quux": "revlos",
-    "level1" : {
-      "l2string": "l2val",
-      "l2struct": {
-        "level3": "l3val"
-      }
-    }
-  },
-  "wibble": "123",
-  "wobble": [
-    {
-      "entry": 1,
-      "EntryDetails": {
-        "details1": "lazybones",
-        "details2": 414
-      }
-    },
-    {
-      "entry": 2,
-      "EntryDetails": {
-        "details1": "entry 123"
-      }
-    }
-  ],
-  "items": [
-    {
-      "id": 1,
-	  "count":1,
-	  "property":100,
-	  "name":"item1"
-    },
-    {
-      "id": 2,
-	  "count":2,
-	  "property":101,
-	  "name":"item2"
-    }
-  ],
-  "points": [2316, 1608, 2819, 2325, 1919, 2309, 3320, 1807],
-  "pointsfloat": [2316.5]
+	"description": "my doc",
+	"foo": {
+		"bar": "baz",
+		"quux": "revlos",
+		"level1": {
+			"l2string": "l2val",
+			"l2struct": {
+				"level3": "l3val"
+			}
+		}
+	},
+	"wibble": "123",
+	"wobble": [{
+		"entry": 1,
+		"EntryDetails": {
+			"details1": "lazybones",
+			"details2": 414
+		}
+	}, {
+		"entry": 2,
+		"EntryDetails": {
+			"details1": "entry 123"
+		}
+	}],
+	"items": [{
+		"id": 1,
+		"count": 1,
+		"property": 100,
+		"name": "item1"
+	}, {
+		"id": 2,
+		"count": 2,
+		"property": 101,
+		"name": "item2"
+	}],
+	"items2": [{
+		"id": 1,
+		"count": 1,
+		"property": 100
+	}, {
+		"id": 2,
+		"count": 2,
+		"property": 101
+	}],
+	"points": [2316, 1608, 2819, 2325, 1919, 2309, 3320, 1807],
+	"pointsfloat": [2316.5]
 }
