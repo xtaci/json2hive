@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const SPC = "  "
+
 func main() {
 	dec := json.NewDecoder(os.Stdin)
 	doc := make(map[string]interface{})
@@ -18,8 +20,8 @@ func main() {
 
 	var lines []string
 	for k, v := range doc {
-		if subschema := createSchema(v); subschema != "" {
-			lines = append(lines, "\t"+k+" "+subschema)
+		if subschema := createSchema(v, "\t"); subschema != "" {
+			lines = append(lines, "  "+k+" "+subschema)
 		}
 	}
 	fmt.Println("CREATE EXTERNAL TABLE test (")
@@ -27,7 +29,7 @@ func main() {
 	fmt.Println(")")
 }
 
-func createSchema(doc interface{}) (schema string) {
+func createSchema(doc interface{}, indent string) (schema string) {
 	const epsilon = 0.000001
 	switch doc := doc.(type) {
 	case nil:
@@ -47,7 +49,7 @@ func createSchema(doc interface{}) (schema string) {
 			// count types
 			types := make(map[string]bool)
 			for _, value := range doc {
-				if subschema := createSchema(value); subschema != "" {
+				if subschema := createSchema(value, indent+SPC); subschema != "" {
 					types[subschema] = true
 				}
 			}
@@ -61,8 +63,8 @@ func createSchema(doc interface{}) (schema string) {
 				struct_type = "STRUCT<"
 				var fields []string
 				for name, value := range doc {
-					if subschema := createSchema(value); subschema != "" {
-						field_schema := name + ":" + subschema
+					if subschema := createSchema(value, indent+SPC); subschema != "" {
+						field_schema := "\n" + indent + name + ":" + subschema
 						fields = append(fields, field_schema)
 					}
 				}
@@ -74,7 +76,7 @@ func createSchema(doc interface{}) (schema string) {
 	case []interface{}:
 		if len(doc) > 0 {
 			array_type := "ARRAY<"
-			array_type += createSchema(doc[0])
+			array_type += createSchema(doc[0], indent+SPC)
 			array_type += ">"
 			return array_type
 		}
