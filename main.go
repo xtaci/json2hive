@@ -19,10 +19,12 @@ func main() {
 	var lines []string
 	for k, v := range doc {
 		if subschema := createSchema(v); subschema != "" {
-			lines = append(lines, k+" "+subschema)
+			lines = append(lines, "\t"+k+" "+subschema)
 		}
 	}
-	fmt.Println("(\n" + strings.Join(lines, ",\n") + "\n)")
+	fmt.Println("CREATE EXTERNAL TABLE test (")
+	fmt.Println(strings.Join(lines, ",\n"))
+	fmt.Println(")")
 }
 
 func createSchema(doc interface{}) (schema string) {
