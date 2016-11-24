@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strings"
 )
@@ -25,13 +26,18 @@ func main() {
 }
 
 func createSchema(doc interface{}) (schema string) {
+	const epsilon = 0.000001
 	switch doc := doc.(type) {
 	case bool:
 		return "BOOLEAN"
 	case string:
 		return "STRING"
 	case float64:
-		return "FLOAT"
+		if math.Abs((doc-math.Floor(doc))) < epsilon || math.Abs((doc-math.Ceil(doc))) < epsilon {
+			return "INT"
+		} else {
+			return "FLOAT"
+		}
 	case map[string]interface{}:
 		if len(doc) > 0 {
 			struct_type := "STRUCT<"
