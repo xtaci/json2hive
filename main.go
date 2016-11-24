@@ -28,6 +28,7 @@ func main() {
 func createSchema(doc interface{}) (schema string) {
 	const epsilon = 0.000001
 	switch doc := doc.(type) {
+	case nil:
 	case bool:
 		return "BOOLEAN"
 	case string:
