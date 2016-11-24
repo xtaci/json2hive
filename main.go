@@ -26,13 +26,11 @@ func main() {
 		log.Panic(err)
 	}
 
-	var fields []string
 	for k, v := range doc {
 		if subschema := createSchema(v, schemaStack{}); subschema != "" {
-			fields = append(fields, k+" "+subschema)
+			fmt.Println(k + " " + subschema)
 		}
 	}
-	fmt.Println(strings.Join(fields, ","))
 }
 
 func createSchema(doc interface{}, stack schemaStack) (schema string) {
