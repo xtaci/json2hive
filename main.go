@@ -17,9 +17,8 @@ func main() {
 
 	var fields []string
 	for k, v := range doc {
-		subschema := createSchema(v)
-		if subschema != "" {
-			fields = append(fields, k+" "+createSchema(v))
+		if subschema := createSchema(v); subschema != "" {
+			fields = append(fields, k+" "+subschema)
 		}
 	}
 	fmt.Println(strings.Join(fields, ","))
@@ -38,9 +37,8 @@ func createSchema(doc interface{}) (schema string) {
 			struct_type := "STRUCT<"
 			var fields []string
 			for name, value := range doc {
-				subschema := createSchema(value)
-				if subschema != "" {
-					field_schema := name + ":" + createSchema(value)
+				if subschema := createSchema(value); subschema != "" {
+					field_schema := name + ":" + subschema
 					fields = append(fields, field_schema)
 				}
 			}
