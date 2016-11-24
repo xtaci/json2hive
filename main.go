@@ -16,11 +16,13 @@ func main() {
 		log.Panic(err)
 	}
 
+	var lines []string
 	for k, v := range doc {
 		if subschema := createSchema(v); subschema != "" {
-			fmt.Println(k + " " + subschema)
+			lines = append(lines, k+" "+subschema)
 		}
 	}
+	fmt.Println("(\n" + strings.Join(lines, ",\n") + "\n)")
 }
 
 func createSchema(doc interface{}) (schema string) {
