@@ -40,7 +40,7 @@ func createSchema(doc interface{}, indent string) (schema string) {
 	case float64:
 		if math.Abs((doc-math.Floor(doc))) < epsilon || math.Abs((doc-math.Ceil(doc))) < epsilon {
 			value := int64(doc)
-			if value >= -2147483648 && value <= 2147483647 {
+			if value >= -2147483648 && value <= 2147483647 { // guest bigint
 				return "INT"
 			} else {
 				return "BIGINT"
@@ -59,7 +59,7 @@ func createSchema(doc interface{}, indent string) (schema string) {
 				}
 			}
 
-			if len(types) == 1 && len(doc) > 1 { // treat as map
+			if len(types) == 1 && len(doc) > 1 { // guest as map
 				for typ := range types {
 					struct_type = "\n" + indent + "MAP<STRING, " + typ + ">"
 					break
