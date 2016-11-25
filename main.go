@@ -39,7 +39,12 @@ func createSchema(doc interface{}, indent string) (schema string) {
 		return "STRING"
 	case float64:
 		if math.Abs((doc-math.Floor(doc))) < epsilon || math.Abs((doc-math.Ceil(doc))) < epsilon {
-			return "INT"
+			value := int64(doc)
+			if value >= -2147483648 && value <= 2147483647 {
+				return "INT"
+			} else {
+				return "BIGINT"
+			}
 		} else {
 			return "FLOAT"
 		}
