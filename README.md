@@ -1,5 +1,8 @@
 # json2hive
 generate hive schema from a json document
+[![Build Status][1]][2]
+[1]: https://travis-ci.org/xtaci/json2hive.svg?branch=master
+[2]: https://travis-ci.org/xtaci/json2hive
 
 # usage
 ```sql
