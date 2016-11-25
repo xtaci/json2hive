@@ -20,8 +20,8 @@ func main() {
 
 	var lines []string
 	for k, v := range doc {
-		if subschema := createSchema(v, SPC); subschema != "" {
-			lines = append(lines, "  "+k+" "+subschema)
+		if subschema := createSchema(v, SPC+SPC); subschema != "" {
+			lines = append(lines, SPC+k+" "+subschema)
 		}
 	}
 	fmt.Println("CREATE EXTERNAL TABLE test (")
@@ -56,11 +56,11 @@ func createSchema(doc interface{}, indent string) (schema string) {
 
 			if len(types) == 1 && len(doc) > 1 { // treat as map
 				for typ := range types {
-					struct_type = "MAP<STRING, " + typ + ">"
+					struct_type = "\n" + indent + "MAP<STRING, " + typ + ">"
 					break
 				}
 			} else { // treat as struct
-				struct_type = "STRUCT<"
+				struct_type = "\n" + indent + "STRUCT<"
 				var fields []string
 				for name, value := range doc {
 					if subschema := createSchema(value, indent+SPC); subschema != "" {
@@ -75,7 +75,7 @@ func createSchema(doc interface{}, indent string) (schema string) {
 		return struct_type
 	case []interface{}:
 		if len(doc) > 0 {
-			array_type := "ARRAY<"
+			array_type := "\n" + indent + "ARRAY<"
 			array_type += createSchema(doc[0], indent+SPC)
 			array_type += ">"
 			return array_type
