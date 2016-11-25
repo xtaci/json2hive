@@ -20,7 +20,7 @@ func main() {
 
 	var lines []string
 	for k, v := range doc {
-		if subschema := createSchema(v, "\t"); subschema != "" {
+		if subschema := createSchema(v, SPC); subschema != "" {
 			lines = append(lines, "  "+k+" "+subschema)
 		}
 	}
