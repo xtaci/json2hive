@@ -6,18 +6,12 @@
 generate hive schema from a json document
 
 # usage
-```sql
+```
 $ go get github.com/xtaci/json2hive
 $ json2hive < test.json
+```
+```sql
 CREATE EXTERNAL TABLE test (
-  wobble
-    ARRAY<
-      STRUCT<
-      entry:INT,
-      EntryDetails:
-        STRUCT<
-        details2:INT,
-        details1:STRING>>>,
   items
     ARRAY<
       STRUCT<
@@ -28,11 +22,8 @@ CREATE EXTERNAL TABLE test (
   items2
     ARRAY<
       MAP<STRING, INT>>,
-  points
-    ARRAY<INT>,
   pointsfloat
     ARRAY<FLOAT>,
-  description STRING,
   foo
     STRUCT<
     bar:STRING,
@@ -43,6 +34,18 @@ CREATE EXTERNAL TABLE test (
       l2struct:
         STRUCT<
         level3:STRING>>>,
-  wibble STRING
+  wibble STRING,
+  wobble
+    ARRAY<
+      STRUCT<
+      entry:INT,
+      EntryDetails:
+        STRUCT<
+        details1:STRING,
+        details2:INT>>>,
+  points
+    ARRAY<INT>,
+  ts BIGINT,
+  description STRING
 )
 ```
