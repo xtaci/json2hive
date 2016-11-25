@@ -3,7 +3,7 @@
 [1]: https://travis-ci.org/xtaci/json2hive.svg?branch=master
 [2]: https://travis-ci.org/xtaci/json2hive
 
-generate hive schema from a json document
+**json2hive** generates hive schemas(with type guesses) from json documents
 
 # usage
 ```
